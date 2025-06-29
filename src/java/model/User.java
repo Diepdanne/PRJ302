@@ -4,8 +4,11 @@ public class User {
     private int userId;
     private String userName;
     private String email;
-    private String password; // Note: In a real app, this should be a hashed password.
+    private String password;
     private String role;
+    private String division;
+    private int managerId;
+    private String managerName;
 
     public User() {
     }
@@ -15,6 +18,15 @@ public class User {
         this.userName = userName;
         this.email = email;
         this.role = role;
+    }
+
+    public User(int userId, String userName, String email, String role, String division, int managerId) {
+        this.userId = userId;
+        this.userName = userName;
+        this.email = email;
+        this.role = role;
+        this.division = division;
+        this.managerId = managerId;
     }
 
     public int getUserId() {
@@ -56,6 +68,28 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
 }
-
-

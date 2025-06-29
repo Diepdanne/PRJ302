@@ -35,15 +35,17 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("userName", user.getUserName());
                 session.setAttribute("userRole", user.getRole());
                 session.setAttribute("userEmail", user.getEmail());
+                session.setAttribute("userDivision", user.getDivision());
+                session.setAttribute("managerID", user.getManagerId());
+                session.setAttribute("managerName", user.getManagerName());
 
                 // Xử lý Remember Me
                 if ("true".equals(rememberMe)) {
-                    // Tạo cookies để lưu thông tin đăng nhập (7 ngày)
                     Cookie emailCookie = new Cookie("rememberedEmail", email);
                     Cookie passwordCookie = new Cookie("rememberedPassword", password);
                     
-                    emailCookie.setMaxAge(7 * 24 * 60 * 60); // 7 ngày
-                    passwordCookie.setMaxAge(7 * 24 * 60 * 60); // 7 ngày
+                    emailCookie.setMaxAge(7 * 24 * 60 * 60);
+                    passwordCookie.setMaxAge(7 * 24 * 60 * 60);
                     
                     emailCookie.setPath("/");
                     passwordCookie.setPath("/");
@@ -51,7 +53,6 @@ public class LoginServlet extends HttpServlet {
                     response.addCookie(emailCookie);
                     response.addCookie(passwordCookie);
                 } else {
-                    // Xóa cookies nếu không chọn remember me
                     Cookie emailCookie = new Cookie("rememberedEmail", "");
                     Cookie passwordCookie = new Cookie("rememberedPassword", "");
                     
@@ -65,7 +66,7 @@ public class LoginServlet extends HttpServlet {
                     response.addCookie(passwordCookie);
                 }
 
-                // Chuyển hướng dựa trên vai trò (Role)
+                // Chuyển hướng dựa trên vai trò
                 switch (user.getRole()) {
                     case "Admin":
                         response.sendRedirect("admin_dashboard.jsp");
@@ -77,17 +78,15 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("staff_dashboard.jsp");
                         break;
                     default:
-                        // Vai trò không xác định, quay về trang login
                         response.sendRedirect("login.jsp");
                         break;
                 }
             } else {
-                // Đăng nhập thất bại
                 request.setAttribute("errorMessage", "Email hoặc mật khẩu không đúng.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (Exception ex) {
-            ex.printStackTrace(); // Ghi log lỗi ra console
+            ex.printStackTrace();
             request.setAttribute("errorMessage", "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }

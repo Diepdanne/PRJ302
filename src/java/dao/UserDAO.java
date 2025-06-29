@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.User;
 
 public class UserDAO {
@@ -23,7 +25,10 @@ public class UserDAO {
      * with the stored hash.
      */
     public User checkLogin(String email, String password) throws Exception {
-        String sql = "SELECT UserID, UserName, Role FROM Users WHERE Email = ? AND Password = ?";
+        String sql = "SELECT u.UserID, u.UserName, u.Email, u.Role, u.Division, u.ManagerID, m.UserName as ManagerName " +
+                    "FROM Users u " +
+                    "LEFT JOIN Users m ON u.ManagerID = m.UserID " +
+                    "WHERE u.Email = ? AND u.Password = ?";
         
         try (Connection conn = DBContext.getConnection(); 
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -33,10 +38,78 @@ public class UserDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new User(rs.getInt("UserID"), rs.getString("UserName"), email, rs.getString("Role"));
+                    User user = new User();
+                    user.setUserId(rs.getInt("UserID"));
+                    user.setUserName(rs.getString("UserName"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setRole(rs.getString("Role"));
+                    user.setDivision(rs.getString("Division"));
+                    user.setManagerId(rs.getInt("ManagerID"));
+                    user.setManagerName(rs.getString("ManagerName"));
+                    return user;
                 }
             }
         }
         return null; // Login failed
+    }
+    
+    /**
+     * Lấy thông tin user theo ID
+     */
+    public User getUserById(int userId) throws Exception {
+        String sql = "SELECT u.UserID, u.UserName, u.Email, u.Role, u.Division, u.ManagerID, m.UserName as ManagerName " +
+                    "FROM Users u " +
+                    "LEFT JOIN Users m ON u.ManagerID = m.UserID " +
+                    "WHERE u.UserID = ?";
+        
+        try (Connection conn = DBContext.getConnection(); 
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setUserId(rs.getInt("UserID"));
+                    user.setUserName(rs.getString("UserName"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setRole(rs.getString("Role"));
+                    user.setDivision(rs.getString("Division"));
+                    user.setManagerId(rs.getInt("ManagerID"));
+                    user.setManagerName(rs.getString("ManagerName"));
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Lấy danh sách nhân viên theo manager
+     */
+    public List<User> getEmployeesByManager(int managerId) throws Exception {
+        List<User> employees = new ArrayList<>();
+        String sql = "SELECT UserID, UserName, Email, Role, Division, ManagerID " +
+                    "FROM Users WHERE ManagerID = ? ORDER BY UserName";
+        
+        try (Connection conn = DBContext.getConnection(); 
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, managerId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User user = new User();
+                    user.setUserId(rs.getInt("UserID"));
+                    user.setUserName(rs.getString("UserName"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setRole(rs.getString("Role"));
+                    user.setDivision(rs.getString("Division"));
+                    user.setManagerId(rs.getInt("ManagerID"));
+                    employees.add(user);
+                }
+            }
+        }
+        return employees;
     }
 }
