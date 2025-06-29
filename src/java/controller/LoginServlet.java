@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
 import model.User;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
@@ -16,13 +17,14 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
-
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
+        String rememberMe = request.getParameter("rememberMe");
+        
         UserDAO userDAO = new UserDAO();
-
+        
         try {
             User user = userDAO.checkLogin(email, password);
 
@@ -32,6 +34,36 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("userID", user.getUserId());
                 session.setAttribute("userName", user.getUserName());
                 session.setAttribute("userRole", user.getRole());
+                session.setAttribute("userEmail", user.getEmail());
+
+                // Xử lý Remember Me
+                if ("true".equals(rememberMe)) {
+                    // Tạo cookies để lưu thông tin đăng nhập (7 ngày)
+                    Cookie emailCookie = new Cookie("rememberedEmail", email);
+                    Cookie passwordCookie = new Cookie("rememberedPassword", password);
+                    
+                    emailCookie.setMaxAge(7 * 24 * 60 * 60); // 7 ngày
+                    passwordCookie.setMaxAge(7 * 24 * 60 * 60); // 7 ngày
+                    
+                    emailCookie.setPath("/");
+                    passwordCookie.setPath("/");
+                    
+                    response.addCookie(emailCookie);
+                    response.addCookie(passwordCookie);
+                } else {
+                    // Xóa cookies nếu không chọn remember me
+                    Cookie emailCookie = new Cookie("rememberedEmail", "");
+                    Cookie passwordCookie = new Cookie("rememberedPassword", "");
+                    
+                    emailCookie.setMaxAge(0);
+                    passwordCookie.setMaxAge(0);
+                    
+                    emailCookie.setPath("/");
+                    passwordCookie.setPath("/");
+                    
+                    response.addCookie(emailCookie);
+                    response.addCookie(passwordCookie);
+                }
 
                 // Chuyển hướng dựa trên vai trò (Role)
                 switch (user.getRole()) {
