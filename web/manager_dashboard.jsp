@@ -33,12 +33,6 @@
                             Dashboard
                         </a>
                     </div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-chart-line"></i>
-                            Báo cáo bộ phận
-                        </a>
-                    </div>
                 </div>
                 
                 <div class="nav-section">

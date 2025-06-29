@@ -1,12 +1,20 @@
 package model;
 
+import java.sql.Date;
+
 public class User {
     private int userId;
     private String userName;
-    private String email;
     private String password;
+    private String email;
     private String role;
     private String division;
+    private Date dateOfBirth;
+    private String gender;
+    private String phoneNumber;
+    private String address;
+    private Date hireDate;
+    private String department;
     private int managerId;
     private String managerName;
 
@@ -20,15 +28,25 @@ public class User {
         this.role = role;
     }
 
-    public User(int userId, String userName, String email, String role, String division, int managerId) {
-        this.userId = userId;
+    // Full constructor
+    public User(String userName, String password, String email, String role, String division, 
+                Date dateOfBirth, String gender, String phoneNumber, String address, 
+                Date hireDate, String department, int managerId) {
         this.userName = userName;
+        this.password = password;
         this.email = email;
         this.role = role;
         this.division = division;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.hireDate = hireDate;
+        this.department = department;
         this.managerId = managerId;
     }
 
+    // Getters and Setters
     public int getUserId() {
         return userId;
     }
@@ -45,20 +63,20 @@ public class User {
         this.userName = userName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRole() {
@@ -75,6 +93,54 @@ public class User {
 
     public void setDivision(String division) {
         this.division = division;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public int getManagerId() {

@@ -4,11 +4,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Đăng nhập hệ thống quản lý nghỉ phép</title>
+    <title>Đăng nhập - Hệ thống quản lý nghỉ phép</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Thêm Font Awesome để có icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="login-body">
@@ -18,7 +16,7 @@
                 <div class="logo">
                     <i class="fas fa-calendar-check"></i>
                 </div>
-                <h2>Hệ thống quản lý nghỉ phép</h2>
+                <h2>Quản lý nghỉ phép</h2>
                 <p class="subtitle">Đăng nhập để tiếp tục</p>
             </div>
             
@@ -26,14 +24,14 @@
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
                     <input type="email" id="email" name="email" required 
-                           placeholder="Nhập email của bạn"
+                           placeholder="Email"
                            value="${cookie.rememberedEmail.value}">
                 </div>
                 
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
                     <input type="password" id="password" name="password" required 
-                           placeholder="Nhập mật khẩu của bạn"
+                           placeholder="Mật khẩu"
                            value="${cookie.rememberedPassword.value}">
                     <span class="password-toggle" onclick="togglePassword()">
                         <i class="fas fa-eye" id="toggleIcon"></i>
@@ -44,13 +42,11 @@
                     <label class="remember-checkbox">
                         <input type="checkbox" name="rememberMe" value="true" 
                                ${not empty cookie.rememberedEmail ? 'checked' : ''}>
-                        <span class="checkmark"></span>
-                        Ghi nhớ mật khẩu
+                        Ghi nhớ đăng nhập
                     </label>
                     <a href="#" class="forgot-link">Quên mật khẩu?</a>
                 </div>
                 
-                <%-- Hiển thị thông báo lỗi bằng JSTL & EL --%>
                 <c:if test="${not empty errorMessage}">
                     <div class="error-message">
                         <i class="fas fa-exclamation-circle"></i>
@@ -65,7 +61,7 @@
             </form>
             
             <div class="login-footer">
-                <p>© 2024 Hệ thống quản lý nghỉ phép. Tất cả quyền được bảo lưu.</p>
+                <p>© 2024 Hệ thống quản lý nghỉ phép</p>
             </div>
         </div>
     </div>

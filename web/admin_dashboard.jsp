@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Admin Dashboard - Hệ thống quản lý nghỉ phép</title>
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -28,75 +28,51 @@
                 <div class="nav-section">
                     <div class="nav-section-title">Tổng quan</div>
                     <div class="nav-item">
-                        <a href="#" class="nav-link active">
+                        <a href="admin_dashboard.jsp" class="nav-link active">
                             <i class="fas fa-tachometer-alt"></i>
                             Dashboard
                         </a>
                     </div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-chart-bar"></i>
-                            Báo cáo thống kê
-                        </a>
-                    </div>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">Quản lý người dùng</div>
+                    <div class="nav-section-title">Nhân viên</div>
                     <div class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="employee-list" class="nav-link">
                             <i class="fas fa-users"></i>
-                            Danh sách nhân viên
+                            Danh sách
                         </a>
                     </div>
                     <div class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="add-employee" class="nav-link">
                             <i class="fas fa-user-plus"></i>
-                            Thêm nhân viên
-                        </a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-user-cog"></i>
-                            Phân quyền
+                            Thêm mới
                         </a>
                     </div>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">Quản lý nghỉ phép</div>
+                    <div class="nav-section-title">Nghỉ phép</div>
                     <div class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="all-requests" class="nav-link">
                             <i class="fas fa-calendar-alt"></i>
-                            Tất cả đơn nghỉ phép
+                            Tất cả đơn
                         </a>
                     </div>
                     <div class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="pending-requests" class="nav-link">
                             <i class="fas fa-clock"></i>
-                            Đơn chờ duyệt
-                        </a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-cogs"></i>
-                            Cấu hình loại nghỉ phép
+                            Chờ duyệt
                         </a>
                     </div>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">Hệ thống</div>
+                    <div class="nav-section-title">Cá nhân</div>
                     <div class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-cog"></i>
-                            Cài đặt hệ thống
-                        </a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-history"></i>
-                            Lịch sử hoạt động
+                        <a href="user-profile" class="nav-link">
+                            <i class="fas fa-user"></i>
+                            Hồ sơ
                         </a>
                     </div>
                     <div class="nav-item">
@@ -113,22 +89,22 @@
         <main class="main-content">
             <header class="header">
                 <div class="header-title">
-                    <h1>Dashboard Admin</h1>
+                    <h1>Dashboard</h1>
                 </div>
                 <div class="header-actions">
-                    <button class="btn btn-outline">
-                        <i class="fas fa-bell"></i>
-                        Thông báo
-                    </button>
-                    <button class="btn btn-primary">
+                    <a href="employee-list" class="btn btn-outline">
+                        <i class="fas fa-users"></i>
+                        Nhân viên
+                    </a>
+                    <a href="add-employee" class="btn btn-primary">
                         <i class="fas fa-plus"></i>
                         Thêm mới
-                    </button>
+                    </a>
                 </div>
             </header>
             
             <div class="content">
-                <!-- Dashboard Cards -->
+                <!-- Stats Cards -->
                 <div class="dashboard-grid">
                     <div class="dashboard-card">
                         <div class="card-header">
@@ -137,7 +113,7 @@
                             </div>
                             <div class="card-content">
                                 <h3>156</h3>
-                                <p>Tổng số nhân viên</p>
+                                <p>Tổng nhân viên</p>
                             </div>
                         </div>
                     </div>
@@ -149,7 +125,7 @@
                             </div>
                             <div class="card-content">
                                 <h3>23</h3>
-                                <p>Đơn chờ duyệt</p>
+                                <p>Chờ duyệt</p>
                             </div>
                         </div>
                     </div>
@@ -161,7 +137,7 @@
                             </div>
                             <div class="card-content">
                                 <h3>89</h3>
-                                <p>Đơn đã duyệt tháng này</p>
+                                <p>Đã duyệt</p>
                             </div>
                         </div>
                     </div>
@@ -173,32 +149,68 @@
                             </div>
                             <div class="card-content">
                                 <h3>12</h3>
-                                <p>Đơn bị từ chối</p>
+                                <p>Từ chối</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Quick Actions -->
+                <div class="dashboard-card">
+                    <h3 class="mb-3">Thao tác nhanh</h3>
+                    <div class="quick-actions">
+                        <a href="add-employee" class="quick-action-item">
+                            <div class="quick-action-icon primary">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="quick-action-content">
+                                <h4>Thêm nhân viên</h4>
+                                <p>Thêm nhân viên mới</p>
+                            </div>
+                        </a>
+                        
+                        <a href="employee-list" class="quick-action-item">
+                            <div class="quick-action-icon success">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="quick-action-content">
+                                <h4>Quản lý nhân viên</h4>
+                                <p>Xem danh sách</p>
+                            </div>
+                        </a>
+                        
+                        <a href="pending-requests" class="quick-action-item">
+                            <div class="quick-action-icon warning">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="quick-action-content">
+                                <h4>Duyệt đơn</h4>
+                                <p>23 đơn chờ duyệt</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
                 <!-- Recent Activities -->
                 <div class="dashboard-card">
-                    <h3 class="mb-4">Hoạt động gần đây</h3>
+                    <h3 class="mb-3">Hoạt động gần đây</h3>
                     <div class="activity-list">
                         <div class="activity-item">
                             <div class="activity-icon success">
-                                <i class="fas fa-check"></i>
+                                <i class="fas fa-user-plus"></i>
                             </div>
                             <div class="activity-content">
-                                <p><strong>Nguyễn Văn A</strong> đã duyệt đơn nghỉ phép của <strong>Trần Thị B</strong></p>
+                                <p>Thêm nhân viên: <strong>Nguyễn Văn A</strong></p>
                                 <span class="activity-time">5 phút trước</span>
                             </div>
                         </div>
                         
                         <div class="activity-item">
                             <div class="activity-icon primary">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-check"></i>
                             </div>
                             <div class="activity-content">
-                                <p><strong>Lê Văn C</strong> đã gửi đơn xin nghỉ phép</p>
+                                <p>Duyệt đơn nghỉ phép: <strong>Manager B</strong></p>
                                 <span class="activity-time">15 phút trước</span>
                             </div>
                         </div>
@@ -208,7 +220,7 @@
                                 <i class="fas fa-edit"></i>
                             </div>
                             <div class="activity-content">
-                                <p><strong>Phạm Thị D</strong> đã cập nhật thông tin cá nhân</p>
+                                <p>Cập nhật thông tin: <strong>Trần Thị C</strong></p>
                                 <span class="activity-time">1 giờ trước</span>
                             </div>
                         </div>
