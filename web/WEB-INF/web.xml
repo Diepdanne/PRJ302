@@ -2,11 +2,10 @@
 <root>
 <servlet>
     <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>com.yourcompany.project.controller.LoginServlet</servlet-class>
+    <servlet-class>controller.LoginServlet</servlet-class>
 </servlet>
 <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
 </servlet-mapping>    
 </root>
-

@@ -12,22 +12,12 @@ public class DBContext {
     private static final String USER = "sa"; 
     private static final String PASS = "sa"; 
 
-    public static Connection getConnection() throws SQLException {
-        Connection conn = null;
-        try {
-            // Đăng ký Driver JDBC
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            // Mở kết nối
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            System.out.println("Kết nối cơ sở dữ liệu thành công!");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Không tìm thấy Driver JDBC SQL Server: " + ex.getMessage());
-        } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Lỗi kết nối cơ sở dữ liệu: " + ex.getMessage());
-        }
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+        // Đăng ký Driver JDBC
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        // Mở kết nối
+        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        System.out.println("Kết nối cơ sở dữ liệu thành công!");
         return conn;
     }
 }
-

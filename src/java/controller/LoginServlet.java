@@ -1,17 +1,14 @@
 package controller;
 
-import dao.DBContext;
+import dao.UserDAO;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.User;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
@@ -24,29 +21,20 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        UserDAO userDAO = new UserDAO();
 
         try {
-            conn = DBContext.getConnection();
-            String sql = "SELECT UserID, UserName, Role FROM Users WHERE Email = ? AND Password = ?";
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, email);
-            ps.setString(2, password);
+            User user = userDAO.checkLogin(email, password);
 
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
+            if (user != null) {
                 // Đăng nhập thành công
                 HttpSession session = request.getSession();
-                session.setAttribute("userID", rs.getInt("UserID"));
-                session.setAttribute("userName", rs.getString("UserName"));
-                String role = rs.getString("Role");
-                session.setAttribute("userRole", role);
+                session.setAttribute("userID", user.getUserId());
+                session.setAttribute("userName", user.getUserName());
+                session.setAttribute("userRole", user.getRole());
 
                 // Chuyển hướng dựa trên vai trò (Role)
-                switch (role) {
+                switch (user.getRole()) {
                     case "Admin":
                         response.sendRedirect("admin_dashboard.jsp");
                         break;
@@ -57,7 +45,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("staff_dashboard.jsp");
                         break;
                     default:
-                        // Nếu có vai trò không xác định, quay về trang login
+                        // Vai trò không xác định, quay về trang login
                         response.sendRedirect("login.jsp");
                         break;
                 }
@@ -66,25 +54,10 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("errorMessage", "Email hoặc mật khẩu không đúng.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace(); // Ghi log lỗi ra console
             request.setAttribute("errorMessage", "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
-        } finally {
-            // Đóng tài nguyên
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
         }
     }
 }
